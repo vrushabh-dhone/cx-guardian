@@ -218,6 +218,8 @@
   function run(mode) {
     if (es) es.close();
     reset(mode);
+    $("results").classList.remove("hidden");
+    $("prodbar").classList.remove("hidden");
     setButtons(true);
     // Kick off stepper at DETECT stage
     stepActivate("step-detect");
@@ -249,6 +251,8 @@
     }
     $("sim-select").value = name;
     reset("idle");
+    $("results").classList.add("hidden");
+    $("prodbar").classList.add("hidden");
     $("mode-pill").textContent = "idle";
     $("mode-pill").className = "pill pill-idle";
   }
@@ -258,7 +262,7 @@
   btnOff.addEventListener("click", () => run("off"));
 
   let initial = params.get("scenario");
-  pickScenario(["cascade", "stuck", "acw", "queue"].includes(initial) ? initial : "cascade");
+  pickScenario(["cascade", "stuck", "queue"].includes(initial) ? initial : "cascade");
 
   // Headless/demo autorun: ?autorun=on|off fires a run on load.
   const autorun = params.get("autorun");

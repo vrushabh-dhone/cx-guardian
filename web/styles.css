@@ -129,7 +129,7 @@ body {
 
 /* Grid */
 .grid {
-  display: grid; grid-template-columns: 0.7fr 2.3fr; gap: 18px;
+  display: grid; grid-template-columns: 40fr 60fr; gap: 18px;
   padding: 0 28px 18px;
 }
 .col-right { display: flex; flex-direction: column; gap: 18px; }
@@ -150,11 +150,12 @@ body {
 .floor-section:last-child { margin-bottom: 0; }
 .agent-row { display: flex; align-items: center; gap: 14px; margin-bottom: 12px; }
 .arrow { color: var(--dim); font-size: 12px; }
-.contacts { display: grid; grid-template-columns: repeat(2, 1fr); gap: 12px; }
+.contacts { display: flex; flex-wrap: wrap; gap: 12px; }
 .tile {
   border: 1.5px solid var(--line); border-radius: 10px; padding: 12px 14px;
   background: var(--panel2); position: relative; overflow: hidden;
   transition: all .35s ease;
+  min-width: 120px; width: max-content;
 }
 .tile-label { font-size: 10px; letter-spacing: 1.5px; color: var(--dim); }
 .tile-id { font-size: 20px; font-weight: 700; margin: 2px 0; }
@@ -193,6 +194,7 @@ body {
 /* Diagnosis */
 .diag-empty { color: var(--dim); font-style: italic; padding: 8px 0; }
 .diag-body.hidden, .diag-empty.hidden, .verdict.hidden { display: none; }
+.grid.hidden, .prodbar.hidden { display: none; }
 .diag-row { display: flex; align-items: center; gap: 10px; margin-bottom: 8px; }
 .diag-row .k { width: 92px; color: var(--dim); font-size: 12px; }
 .diag-row .v { font-weight: 600; }

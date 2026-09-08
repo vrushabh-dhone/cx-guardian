@@ -32,7 +32,6 @@
           <option value="" disabled>SELECT</option>
           <option value="cascade">Failure-Queue Cascade</option>
           <option value="stuck">Stuck Contact</option>
-          <option value="acw">ACW Stuck</option>
           <option value="queue">Queue Stuck</option>
         </select>
       </div>
@@ -79,7 +78,7 @@
     </div>
   </section>
 
-  <main class="grid">
+  <main class="grid hidden" id="results">
     <!-- Left: the contact center floor -->
     <div class="panel floor">
       <div class="panel-head">
@@ -118,7 +117,7 @@
   <div id="verdict" class="verdict hidden"></div>
 
   <!-- Production reality footer -->
-  <footer class="prodbar">
+  <footer class="prodbar hidden" id="prodbar">
     <span class="prodbar-item"><span class="prodbar-num">~1,000</span> whole-agent wipes/week in production</span>
     <span class="prodbar-sep">·</span>
     <span class="prodbar-item"><span class="prodbar-num">5–7×</span> cascade amplification (1 real failure → N wipes)</span>
