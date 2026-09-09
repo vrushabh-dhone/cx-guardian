@@ -71,6 +71,7 @@ body {
 .tab:hover { color: var(--text); }
 .tab-active { background: var(--panel2); color: var(--cyan); border-color: #1e4a52; }
 .scenario-label { color: var(--dim); margin-top: 10px; }
+.scenario-label.hidden { display: none; }
 
 /* Use-case 3-box row */
 .usecase-card {
@@ -137,6 +138,7 @@ body {
   background: var(--panel); border: 1px solid var(--line); border-radius: 12px;
   padding: 16px 18px;
 }
+.panel.hidden { display: none; }
 .panel-head { display: flex; align-items: center; justify-content: space-between; margin-bottom: 14px; }
 .panel-head h2 { margin: 0; font-size: 14px; letter-spacing: 1px; text-transform: uppercase; color: var(--dim); }
 .badge { font-size: 11px; color: var(--cyan); border: 1px solid #1e4a52; background: #0c2a30; padding: 2px 8px; border-radius: 20px; }
@@ -194,7 +196,7 @@ body {
 /* Diagnosis */
 .diag-empty { color: var(--dim); font-style: italic; padding: 8px 0; }
 .diag-body.hidden, .diag-empty.hidden, .verdict.hidden { display: none; }
-.grid.hidden, .prodbar.hidden { display: none; }
+.grid.hidden { display: none; }
 .diag-row { display: flex; align-items: center; gap: 10px; margin-bottom: 8px; }
 .diag-row .k { width: 92px; color: var(--dim); font-size: 12px; }
 .diag-row .v { font-weight: 600; }
@@ -265,15 +267,5 @@ body {
 .meter-fill[data-conf="low"]  { background: linear-gradient(90deg, var(--red), var(--amber)); }
 .meter-fill[data-conf="mid"]  { background: linear-gradient(90deg, var(--amber), #facc15); }
 .meter-fill[data-conf="high"] { background: linear-gradient(90deg, var(--teal), var(--green)); }
-
-/* Production stats footer */
-.prodbar {
-  display: flex; align-items: center; justify-content: center; flex-wrap: wrap;
-  gap: 10px; padding: 12px 28px;
-  background: linear-gradient(90deg, #0c1426 0%, #111726 50%, #0c1426 100%);
-  border-top: 1px solid var(--line); font-size: 12px; color: var(--dim);
-}
-.prodbar-sep { color: var(--line); }
-.prodbar-num { color: var(--amber); font-weight: 700; }
 
 @media (max-width: 900px) { .grid { grid-template-columns: 1fr; } .stats { grid-template-columns: repeat(2,1fr);} .stepper { flex-wrap: wrap; gap: 8px; } .step-line { min-width: 40px; } }

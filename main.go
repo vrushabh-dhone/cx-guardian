@@ -23,8 +23,8 @@ var webFS embed.FS
 
 // diagnoser is selected once at startup: Claude if a key is present, else the rule engine.
 var (
-	diagnoser   engine.Diagnoser
-	diagEngine  string
+	diagnoser  engine.Diagnoser
+	diagEngine string
 )
 
 func main() {
@@ -49,7 +49,6 @@ func main() {
 	log.Printf("CX Guardian dashboard → http://localhost%s  (diagnoser: %s)", *addr, diagEngine)
 	log.Fatal(http.ListenAndServe(*addr, mux))
 }
-
 
 func sse(w http.ResponseWriter, fl http.Flusher, event string, payload any) {
 	b, _ := json.Marshal(payload)
@@ -88,7 +87,7 @@ func runHandler(w http.ResponseWriter, r *http.Request) {
 // makeStep returns the pacing function. Fast mode (for headless screenshots) collapses
 // the animation delays so a run completes near-instantly.
 func makeStep(fast bool) func() {
-	d := 650 * time.Millisecond
+	d := 1100 * time.Millisecond
 	if fast {
 		d = 15 * time.Millisecond
 	}
@@ -139,10 +138,15 @@ func runCascade(w http.ResponseWriter, fl http.Flusher, sentinelOn bool, step fu
 		sse(w, fl, "log", logLine("FQUEUE", "failure-queue Lambda: getRelatedRecords → whole-agent cleanup scope"))
 		step()
 		sse(w, fl, "log", logLine("FQUEUE", fmt.Sprintf("\"Agent record ttl set\" agentNo=%d (entityoperations.go:76)", sc.AgentNo)))
+		step()
 		result = fq.WholeAgentCleanup(sc.SeedContact, sc.AgentNo)
 		sse(w, fl, "log", logLine("FQUEUE", result.Message))
 	}
 	step()
+	if !sentinelOn {
+		step() // extra beats before the wipe renders, so the WorkingContacts → Wiped flip is clearly visible
+		step()
+	}
 
 	store.ExpireDue()
 	sse(w, fl, "result", map[string]any{"quarantined": result.Quarantined, "preserved": result.Preserved})
@@ -231,7 +235,6 @@ func runStuck(w http.ResponseWriter, fl http.Flusher, sentinelOn bool, step func
 		},
 	})
 }
-
 
 // runSingleContact is the shared shape for single-contact remediation scenarios
 // (stuck-in-routing, ACW-stuck, queue-stuck): scene → problem → [CX Guardian: detect/diagnose/heal]

@@ -88,9 +88,14 @@
       <div id="floor"></div>
     </div>
 
-    <!-- Right: brains + feed -->
+    <!-- Right: feed + brains -->
     <div class="col-right">
-      <div class="panel diagnosis">
+      <div class="panel feed">
+        <div class="panel-head"><h2>Event Feed</h2></div>
+        <div id="feed" class="feed-list"></div>
+      </div>
+
+      <div class="panel diagnosis hidden" id="diagnosis-panel">
         <div class="panel-head"><h2>AI Diagnosis</h2><span id="diag-engine" class="badge">FSM-grounded</span></div>
         <div id="diag-empty" class="diag-empty">Awaiting a trigger…</div>
         <div id="diag-body" class="diag-body hidden">
@@ -104,26 +109,12 @@
           <p id="diag-expl" class="diag-expl"></p>
         </div>
       </div>
-
-      <div class="panel feed">
-        <div class="panel-head"><h2>Event Feed</h2></div>
-        <div id="feed" class="feed-list"></div>
-      </div>
     </div>
   </main>
 
   <section id="stats" class="stats"></section>
 
   <div id="verdict" class="verdict hidden"></div>
-
-  <!-- Production reality footer -->
-  <footer class="prodbar hidden" id="prodbar">
-    <span class="prodbar-item"><span class="prodbar-num">~1,000</span> whole-agent wipes/week in production</span>
-    <span class="prodbar-sep">·</span>
-    <span class="prodbar-item"><span class="prodbar-num">5–7×</span> cascade amplification (1 real failure → N wipes)</span>
-    <span class="prodbar-sep">·</span>
-    <span class="prodbar-item">CX Guardian: <span class="prodbar-num">contact-only</span> quarantine → amplification → <span class="prodbar-num">1×</span></span>
-  </footer>
 
   <script src="app.js"></script>
 </body>

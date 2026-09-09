@@ -66,6 +66,7 @@
     $("diag-body").classList.add("hidden");
     $("diag-empty").classList.remove("hidden");
     $("verdict").classList.add("hidden");
+    $("diagnosis-panel").classList.toggle("hidden", mode !== "on");
     stepReset();
     const pill = $("mode-pill");
     pill.textContent = mode === "on" ? "CX Guardian ON" : "CX Guardian OFF";
@@ -219,7 +220,6 @@
     if (es) es.close();
     reset(mode);
     $("results").classList.remove("hidden");
-    $("prodbar").classList.remove("hidden");
     setButtons(true);
     // Kick off stepper at DETECT stage
     stepActivate("step-detect");
@@ -252,7 +252,6 @@
     $("sim-select").value = name;
     reset("idle");
     $("results").classList.add("hidden");
-    $("prodbar").classList.add("hidden");
     $("mode-pill").textContent = "idle";
     $("mode-pill").className = "pill pill-idle";
   }
