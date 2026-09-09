@@ -132,7 +132,9 @@ func runCascade(w http.ResponseWriter, fl http.Flusher, sentinelOn bool, step fu
 			diag := emitDiagnosis(w, fl, detection)
 			step()
 			result = healer.Apply(detection, diag)
+			step()
 			sse(w, fl, "log", logLine("HEAL", "🛡  "+result.Message))
+			step() // extra beat after HEAL, so the circuit-break settles before the save renders
 		}
 	} else {
 		sse(w, fl, "log", logLine("FQUEUE", "failure-queue Lambda: getRelatedRecords → whole-agent cleanup scope"))
@@ -257,7 +259,9 @@ func runSingleContact(w http.ResponseWriter, fl http.Flusher, sentinelOn bool, s
 		diag := emitDiagnosis(w, fl, det)
 		step()
 		res := healer.Apply(det, diag)
+		step()
 		sse(w, fl, "log", logLine("HEAL", "🛡  "+res.Message))
+		step() // extra beat after HEAL, so the recovered scene doesn't render instantly
 		recovered = true
 	} else {
 		sse(w, fl, "log", logLine("FQUEUE", offMsg))
