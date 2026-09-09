@@ -270,6 +270,11 @@
     disconnectLive();
     liveClosing = false;
     liveOnce = !!opts.once;
+    // pickScenario() hides both of these by default (Simulation's run() reveals them for
+    // its own path) — Live mode needs the same reveal or DETECT/DIAGNOSE/HEAL data updates
+    // invisibly behind display:none.
+    $("results").classList.remove("hidden");
+    $("diagnosis-panel").classList.remove("hidden");
     // Refresh the right panel so only THIS action's output shows (no carry-over).
     $("feed").innerHTML = "";
     $("diag-body").classList.add("hidden");
