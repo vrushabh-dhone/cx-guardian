@@ -380,9 +380,9 @@
 
   let initial = params.get("scenario");
   if (initial === "live") initial = "live-cascade"; // back-compat
-  // "acw" (Simulation) stays out of the allowlist to match the hidden sim-select option;
-  // "live-acw" is untouched — Live mode's ACW scenario remains fully active.
-  const resolvedInitial = ["cascade", "stuck", "queue", "live-cascade", "live-stuck", "live-acw", "live-queue"].includes(initial) ? initial : "cascade";
+  // "acw" and "live-acw" stay out of the allowlist to match the hidden dropdown options
+  // (both Simulation and Live ACW scenarios remain implemented, just not selectable).
+  const resolvedInitial = ["cascade", "stuck", "queue", "live-cascade", "live-stuck", "live-queue"].includes(initial) ? initial : "cascade";
 
   let storedLiveEnabled = false;
   try { storedLiveEnabled = localStorage.getItem(LIVE_TOGGLE_KEY) === "1"; } catch (e) { /* private mode: ignore */ }
