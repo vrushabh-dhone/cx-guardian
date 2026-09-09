@@ -54,7 +54,7 @@ func (RuleDiagnoser) Diagnose(d Detection) Diagnosis {
 			RootCause:         "Failure-queue whole-agent cleanup is firing in bursts — each wipe takes an agent's healthy contacts with it (the cascade).",
 			RecommendedAction: ActionCascadeCircuitBreak,
 			Confidence:        conf,
-			Explanation: fmt.Sprintf("Observed %d+ whole-agent TTL wipes in the window (sample agents %v). Each is an "+
+			Explanation: fmt.Sprintf("Observed a whole-agent TTL wipe burst in the window (%d victim contact(s)/agent(s) sampled: %v). Each is an "+
 				"AssignContact failure escalated to whole-agent scope. Recommended: engage the cascade circuit breaker "+
 				"(contact-only quarantine in failure-queue) and raise an incident for the cell.", n, d.VictimsAtRisk),
 		}

@@ -48,8 +48,23 @@ body {
 /* scenario-pick no longer exists — dropdowns sit directly in controls-row */
 .tabs { display: flex; gap: 18px; align-items: center; flex-wrap: wrap; }
 .dd { display: flex; align-items: center; gap: 8px; background: var(--bg2); border: 1px solid var(--line); border-radius: 6px; padding: 6px 10px; }
+.dd.live { border-color: #4a1e2a; }
+.dd[hidden] { display: none; }
 .dd-cap { font-size: 10px; letter-spacing: 1.5px; text-transform: uppercase; color: var(--dim); white-space: nowrap; }
+.dd.live .dd-cap { color: var(--red); }
 .cap-ico { font-size: 15px; line-height: 0; vertical-align: -2px; }
+
+/* Live · ic-dev reveal/hide toggle — hidden by default, remembered per-browser */
+.live-toggle {
+  display: flex; align-items: center; gap: 6px;
+  background: var(--bg2); border: 1px solid var(--line); border-radius: 6px;
+  padding: 6px 10px; font-size: 11px; font-weight: 700; letter-spacing: .5px;
+  color: var(--dim); cursor: pointer; white-space: nowrap;
+  transition: all .15s ease;
+}
+.live-toggle:hover { color: var(--text); border-color: var(--cyan); }
+.live-toggle.unlocked { color: var(--red); border-color: #4a1e2a; background: #1c0f15; }
+.live-toggle-ico { font-size: 13px; line-height: 0; }
 .scenario-pick-label { font-size: 11px; letter-spacing: 1.5px; text-transform: uppercase; color: var(--dim); }
 .scenario-select {
   background: var(--panel2); color: var(--text); border: 1px solid var(--line);
