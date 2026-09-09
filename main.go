@@ -87,7 +87,7 @@ func runHandler(w http.ResponseWriter, r *http.Request) {
 // makeStep returns the pacing function. Fast mode (for headless screenshots) collapses
 // the animation delays so a run completes near-instantly.
 func makeStep(fast bool) func() {
-	d := 1100 * time.Millisecond
+	d := 1500 * time.Millisecond
 	if fast {
 		d = 15 * time.Millisecond
 	}

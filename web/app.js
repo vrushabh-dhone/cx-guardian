@@ -59,9 +59,12 @@
     return "high";
   }
 
+  let tileEls = {}; // id -> live tile element, kept across scene updates so state changes animate in place
+
   function reset(mode) {
     $("feed").innerHTML = "";
     $("floor").innerHTML = "";
+    tileEls = {};
     $("stats").innerHTML = "";
     $("diag-body").classList.add("hidden");
     $("diag-empty").classList.remove("hidden");
@@ -81,11 +84,28 @@
     return "tile healthy";
   }
 
-  // renderScene builds the floor dynamically from all agent+contact records.
-  // Works for single-agent (all existing scenarios) and multi-agent equally.
+  // renderScene builds the floor dynamically from all agent+contact records on the
+  // first call, then updates the same tile elements in place on every later call —
+  // that's what lets the .tile CSS transition actually animate a state change
+  // (e.g. healthy → wiped) instead of instantly swapping out fresh DOM nodes.
   function renderScene(d) {
     const floor = $("floor");
+    const isFirstRender = Object.keys(tileEls).length === 0;
+
+    if (!isFirstRender) {
+      d.records.forEach((r) => {
+        const key = r.Kind === "AGENT" ? "agent-" + r.ID : String(r.ID);
+        const el = tileEls[key];
+        if (!el) return;
+        el.className = r.Kind === "AGENT" ? "tile agent" + (r.Wiped ? " wiped" : "") : tileClassFor(r);
+        const stateEl = el.querySelector(".tile-state");
+        if (stateEl) stateEl.textContent = r.Kind === "AGENT" ? (r.Wiped ? "WIPED" : r.State) : (r.Wiped ? "—" : r.State);
+      });
+      return;
+    }
+
     floor.innerHTML = "";
+    tileEls = {};
 
     // Group contacts by agentNo
     const agents = d.records.filter((r) => r.Kind === "AGENT").sort((a, b) => a.ID - b.ID);
@@ -113,6 +133,7 @@
         `<div class="tile-id">#${ag.ID}</div>` +
         `<div class="tile-state">${agWiped ? "WIPED" : ag.State}</div>`;
       agentRow.appendChild(agTile);
+      tileEls["agent-" + ag.ID] = agTile;
 
       const arrow = document.createElement("div");
       arrow.className = "arrow";
@@ -132,6 +153,7 @@
           `<div class="tile-id">#${r.ID}</div>` +
           `<div class="tile-state">${r.Wiped ? "—" : r.State}</div>`;
         contactGrid.appendChild(el);
+        tileEls[String(r.ID)] = el;
       });
 
       section.appendChild(contactGrid);
